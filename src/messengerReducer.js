@@ -1,8 +1,11 @@
-export const initialState = [
-  {id: 0, message: 'Hello', isSelected: true},
-  {id: 1, message: 'Hello', isSelected: false},
-  {id: 2, message: 'Hello', isSelected: false},
-];
+export const initialState = {
+  selectedId: 0,
+  messages: {
+    0: 'Hello, Taylor',
+    1: 'Hello, Alice',
+    2: 'Hello, Bob',
+  },
+};
 
 export function messengerReducer(state, action) {
   switch (action.type) {
@@ -10,19 +13,24 @@ export function messengerReducer(state, action) {
       return {
         ...state,
         selectedId: action.contactId,
-        message: '',
       };
     }
     case 'edited_message': {
       return {
         ...state,
-        message: action.message,
+        messages: {
+          ...state.messages,
+          [state.selectedId]: action.message,
+        },
       };
     }
     case 'sent_message': {
       return {
         ...state,
-        message: '',
+        messages: {
+          ...state.messages,
+          [state.selectedId]: '',
+        },
       };
     }
     default: {
