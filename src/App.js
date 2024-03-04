@@ -1,31 +1,16 @@
-import { useReducer } from './MyReact.js';
-import Chat from './Chat.js';
-import ContactList from './ContactList.js';
-import { initialState, messengerReducer } from './messengerReducer';
+import Section from "./Section";
+import Heading from "./Heading";
 
-export default function Messenger() {
-  const [state, dispatch] = useReducer(messengerReducer, initialState);
-  const message = state.messages[state.selectedId];
-  const contact = contacts.find((c) => c.id === state.selectedId);
+
+export default function Page() {
   return (
-    <div>
-      <ContactList
-        contacts={contacts}
-        selectedId={state.selectedId}
-        dispatch={dispatch}
-      />
-      <Chat
-        key={contact.id}
-        message={message}
-        contact={contact}
-        dispatch={dispatch}
-      />
-    </div>
+    <Section>
+      <Heading level={1}>Title</Heading>
+      <Heading level={2}>Heading</Heading>
+      <Heading level={3}>Sub-heading</Heading>
+      <Heading level={4}>Sub-sub-heading</Heading>
+      <Heading level={5}>Sub-sub-sub-heading</Heading>
+      <Heading level={6}>Sub-sub-sub-sub-heading</Heading>
+    </Section>
   );
 }
-
-const contacts = [
-  {id: 0, name: 'Taylor', email: 'taylor@mail.com'},
-  {id: 1, name: 'Alice', email: 'alice@mail.com'},
-  {id: 2, name: 'Bob', email: 'bob@mail.com'},
-];
