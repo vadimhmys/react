@@ -1,7 +1,6 @@
 import Section from "./Section";
 import Heading from "./Heading";
 
-
 export default function Page() {
   return (
     <Section level={1}>
