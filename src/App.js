@@ -1,51 +1,62 @@
-import Section from "./Section";
-import Heading from "./Heading";
+import { useState } from 'react';
+import { places } from './data.js';
+import { getImageUrl } from './utils.js';
 
-export default function ProfilePage() {
+export default function App() {
+  const [isLarge, setIsLarge] = useState(false);
+  const imageSize = isLarge ? 150 : 100;
   return (
-    <Section>
-      <Heading>My Profile</Heading>
-      <Post
-        title="Hello traveller!"
-        body="Read about my advantures."
+    <>
+      <label>
+        <input
+          type="checkbox"
+          checked={isLarge}
+          onChange={e => {
+            setIsLarge(e.target.checked);
+          }}
+        />
+        Use large images
+      </label>
+      <hr />
+      <List imageSize={imageSize} />
+    </>
+  )
+}
+
+function List({ imageSize }) {
+  const listItems = places.map(place =>
+    <li key={place.id}>
+      <Place
+        place={place}
+        imageSize={imageSize}
       />
-      <AllPosts/>
-    </Section>
+    </li>
+  );
+  return <ul>{listItems}</ul>;
+}
+
+function Place({ place, imageSize }) {
+  return (
+    <>
+      <PlaceImage
+        place={place}
+        imageSize={imageSize}
+      />
+      <p>
+        <b>{place.name}</b>
+        {': ' + place.description}
+      </p>
+    </>
   );
 }
 
-function Post({ title, body }) {
+function PlaceImage({ place, imageSize }) {
   return (
-    <Section isFancy={true}>
-      <Heading>
-        {title}
-      </Heading>
-      <p><i>{body}</i></p>
-    </Section>
-  );
-}
-
-function AllPosts() {
-  return (
-    <Section>
-      <Heading>Posts</Heading>
-      <RecentPosts/>
-    </Section>
-  );
-}
-
-function RecentPosts() {
-  return (
-    <Section>
-      <Heading>Recent Posts</Heading>
-      <Post
-        title="Flavors of Lisbon"
-        body="...those pasteis de nata"
-      />
-      <Post
-        title="Buenos Aires in the rhytm of tango"
-        body="I loved it"
-      />
-    </Section>
+    <img
+      src={getImageUrl(place)}
+      alt={place.name}
+      width={imageSize}
+      height={imageSize}
+    />
   );
 }
