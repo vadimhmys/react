@@ -1,15 +1,15 @@
 import { useRef, useState } from "react";
 
 export default function Counter() {
-  const [count, setCount] = useState(0);
+  let countRef = useRef(0);
 
   function handleClick() {
-    setCount(count + 1);
+    countRef.current = countRef.current + 1;
   }
  
   return (
     <button onClick={handleClick}>
-      You clicked {count} times!
+      You clicked {countRef.current} times!
     </button>
   );
 }
