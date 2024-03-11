@@ -3,21 +3,22 @@ import { useRef, useState } from "react";
 export default function Stopwatch() {
   const [startTime, setStartTime] = useState(null);
   const [now, setNow] = useState(null);
-  const ref = useRef(null);
+  const intervalRef = useRef(null);
 
   function handleStart() {
     setStartTime(Date.now());
     setNow(Date.now());
 
+    clearInterval(intervalRef.current);
 
-    setInterval(() => {
+    intervalRef.current = setInterval(() => {
       setNow(Date.now())
     }, 10);
   }
 
- /*  function handleStopClick() {
-    clearInterval(ref.current);
-  } */
+  function handleStop() {
+    clearInterval(intervalRef.current);
+  }
 
   let secondsPassed = 0;
 
@@ -30,7 +31,7 @@ export default function Stopwatch() {
     <>
       <h1>Time.passed: {secondsPassed.toFixed(3)}</h1>
       <button onClick={handleStart}>Start</button>
-      {/* <button onClick={handleStopClick}>Stop</button> */}
+      <button onClick={handleStop}>Stop</button>
     </>
   );
 }
