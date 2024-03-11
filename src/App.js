@@ -1,16 +1,36 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
-export default function Counter() {
-  let ref = useRef(0);
+export default function Stopwatch() {
+  const [startTime, setStartTime] = useState(null);
+  const [now, setNow] = useState(null);
+  const ref = useRef(null);
 
-  function handleClick() {
-    ref.current = ref.current + 1;
-    alert('You clicked ' + ref.current + ' times!');
+  function handleStart() {
+    setStartTime(Date.now());
+    setNow(Date.now());
+
+
+    setInterval(() => {
+      setNow(Date.now())
+    }, 10);
   }
 
+ /*  function handleStopClick() {
+    clearInterval(ref.current);
+  } */
+
+  let secondsPassed = 0;
+
+  if (startTime != null && now != null) {
+    secondsPassed = (now - startTime) / 1000;
+  }
+
+
   return (
-    <button onClick={handleClick}>
-      Click
-    </button>
+    <>
+      <h1>Time.passed: {secondsPassed.toFixed(3)}</h1>
+      <button onClick={handleStart}>Start</button>
+      {/* <button onClick={handleStopClick}>Stop</button> */}
+    </>
   );
 }
