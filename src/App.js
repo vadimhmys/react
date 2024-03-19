@@ -1,59 +1,13 @@
-import { useRef, useState } from 'react';
-import { flushSync } from 'react-dom';
+import SearchButton from './SearchButton.js';
+import SearchInput from './SearchInput.js';
 
-export default function CatFriends() {
-  const [index, setIndex] = useState(0);
-  const activeImageRef = useRef(null);
-
+export default function Page() {
   return (
     <>
       <nav>
-        <button onClick={() => {
-          flushSync(() => {
-            if (index < catList.length - 1) {
-              setIndex(index + 1);
-            } else {
-              setIndex(0);
-            }
-          })
-          activeImageRef.current.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest',
-            inline: 'center'
-          });
-        }}>
-          Next
-        </button>
+        <SearchButton />
       </nav>
-      <div>
-        <ul>
-          {catList.map((cat, i) => (
-            <li 
-              key={cat.id}
-              ref={index === i ? activeImageRef : null}
-              >
-              <img
-                className={
-                  index === i ?
-                    'active' :
-                    ''
-                }
-                src={cat.imageUrl}
-                alt={'Cat #' + cat.id}
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
+      <SearchInput />
     </>
   );
 }
-
-const catList = [];
-for (let i = 0; i < 10; i++) {
-  catList.push({
-    id: i,
-    imageUrl: 'https://placekitten.com/250/200?image=' + i
-  });
-}
-
