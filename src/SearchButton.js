@@ -1,6 +1,6 @@
-export default function SearchButton() {
+export default function SearchButton({handleClick}) {
   return (
-    <button>
+    <button onClick={handleClick}>
       Search
     </button>
   );
