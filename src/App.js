@@ -1,13 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { createConnection } from "./chat";
 
 export default function ChatRoom() {
+  const dialogRef = useRef(null);
   useEffect(() => {
-    const connection = createConnection();
-    connection.connect();
+    const dialog = dialogRef.current;
+    dialog.showModal();
     return () => {
-      connection.disconnect();
+      dialog.close();
     }
   }, []);
-  return <h1>Welcome to the chat!</h1>
+  return (
+  <dialog ref={dialogRef}>
+    <p>Greetings, one and all!</p>
+    <form method="dialog">
+      <button>OK</button>
+    </form>
+  </dialog>
+  );
 }
