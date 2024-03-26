@@ -1,18 +1,46 @@
-import { useEffect, useRef } from "react";
-import { createConnection } from "./chat";
+import { useState, useEffect } from "react"
 
-export default function ChatRoom() {
-  const headerRef = useRef(null);
+
+function Playground() {
+  const [text, setText] = useState('a');
+
   useEffect(() => {
-   const node = headerRef.current;
-   node.style.opacity = 1;
-   return () => {
-    node.style.opacity = 0;
-   }
-  }, []);
+    function onTimeout() {
+      console.log('⏰ ' + text);
+    }
+
+    console.log('🔵 Shedule "' + text + '" log');
+    const timeoutId = setTimeout(onTimeout, 3000);
+
+    return () => {
+      console.log('🟡 Cancel"' + text + '" log');
+      clearTimeout(timeoutId);
+    };
+  }, [text]);
+
   return (
-    <h1 ref={headerRef}>
-       Lorem ipsum dolor sit amet consectetur adipisicing elit.
-    </h1>
+    <>
+      <label>
+        What to log: {' '}
+        <input
+          value={text}
+          onChange={e => setText(e.target.value)}
+        />
+      </label>
+      <h1>{text}</h1>
+    </>
+  );
+}
+
+export default function App() {
+  const [show, setShow] = useState(false);
+  return (
+    <>
+      <button onClick={() => setShow(!show)}>
+        {show ? 'Unmount' : 'Mount'} the component
+      </button>
+      {show && <hr />}
+      {show && <Playground/>}
+    </>
   );
 }
